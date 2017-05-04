@@ -63,16 +63,16 @@ namespace SigmaSciDefRenamer
                     {
                         data.AddValue(NEW + key.name.Remove(0, SOURCE.Length), key.value);
                     }
-					if (SWAP && key.name.StartsWith(NEW))
-					{
+                    if (SWAP && key.name.StartsWith(NEW))
+                    {
                         data.AddValue(SOURCE + key.name.Remove(0, NEW.Length), key.value);
-					}
+                    }
                 }
-				if (SWAP)
-				{
-					results.RemoveValuesStartWith(SOURCE);
-					results.RemoveValuesStartWith(NEW);
-				}
+                if (SWAP)
+                {
+                    results.RemoveValuesStartWith(SOURCE);
+                    results.RemoveValuesStartWith(NEW);
+                }
                 results.AddData(data);
             }
         }
