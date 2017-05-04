@@ -51,6 +51,7 @@ namespace SigmaSciDefRenamer
                 }
             }
         }
+
         void Copy(string SOURCE, string NEW, bool SWAP)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
@@ -76,6 +77,7 @@ namespace SigmaSciDefRenamer
                 results.AddData(data);
             }
         }
+
         void Delete(string NAME)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
@@ -84,6 +86,7 @@ namespace SigmaSciDefRenamer
                 results.RemoveValuesStartWith(NAME);
             }
         }
+
         void Replace(string FIND, string REPLACE, string PLANET)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
