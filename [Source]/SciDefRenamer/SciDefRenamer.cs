@@ -19,26 +19,26 @@ namespace SigmaSciDefRenamer
                 {
                     if (node.name == "Copy")
                     {
-                        string OLD = rename.GetValue("OLD");
-                        string NEW = rename.GetValue("NEW");
+                        string OLD = node.GetValue("OLD");
+                        string NEW = node.GetValue("NEW");
                         Copy(OLD, NEW);
                     }
                     if (node.name == "Delete")
                     {
-                        string NAME = rename.GetValue("NAME");
+                        string NAME = node.GetValue("NAME");
                         Delete(OLD);
                     }
                     if (node.name == "Rename")
                     {
-                        string OLD = rename.GetValue("OLD");
-                        string NEW = rename.GetValue("NEW");
+                        string OLD = node.GetValue("OLD");
+                        string NEW = node.GetValue("NEW");
                         Copy(OLD, NEW);
                         Delete(OLD);
                     }
                     if (node.name == "Replace")
                     {
-                        string OLD = rename.GetValue("OLD");
-                        string NEW = rename.GetValue("NEW");
+                        string OLD = node.GetValue("OLD");
+                        string NEW = node.GetValue("NEW");
                         Replace(OLD, NEW);
                     }
                 }
