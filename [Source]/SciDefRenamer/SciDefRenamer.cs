@@ -17,16 +17,16 @@ namespace SigmaSciDefRenamer
             {
                 foreach (ConfigNode node in SSDR.nodes)
                 {
-                    if (node.name == "Copy" && node.HasValue("OLD") && node.HasValue("NEW"))
+                    if (node.name == "Copy" && node.HasValue("SOURCE") && node.HasValue("NEW"))
                     {
-                        string OLD = node.GetValue("OLD");
+                        string SOURCE = node.GetValue("SOURCE");
                         string NEW = node.GetValue("NEW");
-                        Copy(OLD, NEW);
+                        Copy(SOURCE, NEW);
                     }
                     if (node.name == "Delete" && node.HasValue("NAME"))
                     {
                         string NAME = node.GetValue("NAME");
-                        Delete(OLD);
+                        Delete(NAME);
                     }
                     if (node.name == "Rename" && node.HasValue("OLD") && node.HasValue("NEW"))
                     {
@@ -45,7 +45,7 @@ namespace SigmaSciDefRenamer
                 }
             }
         }
-        void Copy(string OLD, string NEW)
+        void Copy(string SOURCE, string NEW)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
@@ -53,9 +53,9 @@ namespace SigmaSciDefRenamer
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
-                    if (key.name.StartsWith(OLD))
+                    if (key.name.StartsWith(SOURCE))
                     {
-                        data.AddValue(NEW + key.name.Remove(0, OLD.Length), key.value);
+                        data.AddValue(NEW + key.name.Remove(0, SOURCE.Length), key.value);
                     }
                 }
                 results.AddData(data);
