@@ -1,3 +1,14 @@
+**v0.2.0**
+
+- Added README.txt with informations about the syntax
+- Added a check to avoid nodes with wrong syntax
+- Added new functions:
+    > Copy
+    > Delete
+    > Replace
+    > Swap
+
+
 **v0.1.0**
 
 - First Beta Release
