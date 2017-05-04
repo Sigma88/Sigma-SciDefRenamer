@@ -37,9 +37,10 @@ namespace SigmaSciDefRenamer
                     }
                     if (node.name == "Replace")
                     {
-                        string OLD = node.GetValue("OLD");
-                        string NEW = node.GetValue("NEW");
-                        Replace(OLD, NEW);
+                        string FIND = node.GetValue("FIND");
+                        string REPLACE = node.GetValue("REPLACE");
+                        string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
+                        Replace(FIND, REPLACE, PLANET);
                     }
                 }
             }
@@ -68,7 +69,7 @@ namespace SigmaSciDefRenamer
                 results.RemoveValuesStartWith(NAME);
             }
         }
-        void Replace(string OLD, string NEW)
+        void Replace(string FIND, string REPLACE, string PLANET)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
@@ -76,12 +77,12 @@ namespace SigmaSciDefRenamer
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
-                    if (key.name.StartsWith(OLD))
+                    if (key.name.StartsWith(PLANET))
                     {
-                        data.AddValue(key.name.Replace(OLD, NEW), key.value);
+                        data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
                     }
                 }
-                results.RemoveValuesStartWith(OLD);
+                results.RemoveValuesStartWith(PLANET);
                 results.AddData(data);
             }
         }
