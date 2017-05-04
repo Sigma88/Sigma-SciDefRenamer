@@ -54,7 +54,7 @@ namespace SigmaSciDefRenamer
                 {
                     if (key.name.StartsWith(OLD))
                     {
-                        data.AddValue( NEW + key.name.Replace(0, OLD.Length), key.value);
+                        data.AddValue(NEW + key.name.Remove(0, OLD.Length), key.value);
                     }
                 }
                 results.AddData(data);
