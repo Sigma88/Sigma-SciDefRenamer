@@ -32,6 +32,12 @@ This function can be limited to a certain planet by defining an additional param
 
 ---
 
+# Swap
+
+Swaps all science definitions between (THIS) planet and (THAT) planet.
+
+---
+
 
 
 ## Syntax
@@ -63,6 +69,11 @@ SciDefRenamer
 		REPLACE = replacement_string
 		
 		PLANET = planet_name // This is Optional //
+	}
+	Swap
+	{
+		THIS = planet_name
+		THAT = planet_name
 	}
 }
 
