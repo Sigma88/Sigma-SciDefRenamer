@@ -32,7 +32,7 @@ namespace SigmaSciDefRenamer
                     {
                         string OLD = node.GetValue("OLD");
                         string NEW = node.GetValue("NEW");
-                        Copy(OLD, NEW);
+                        Copy(OLD, NEW, false);
                         Delete(OLD);
                     }
                     if (node.name == "Replace" && node.HasValue("FIND") && node.HasValue("REPLACE"))
