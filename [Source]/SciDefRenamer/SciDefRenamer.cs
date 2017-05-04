@@ -21,7 +21,7 @@ namespace SigmaSciDefRenamer
                     {
                         string SOURCE = node.GetValue("SOURCE");
                         string NEW = node.GetValue("NEW");
-                        Copy(SOURCE, NEW);
+                        Copy(SOURCE, NEW, false);
                     }
                     if (node.name == "Delete" && node.HasValue("NAME"))
                     {
@@ -42,10 +42,16 @@ namespace SigmaSciDefRenamer
                         string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
                         Replace(FIND, REPLACE, PLANET);
                     }
+                    if (node.name == "Swap" && node.HasValue("THIS") && node.HasValue("THAT"))
+                    {
+                        string THIS = node.GetValue("THIS");
+                        string THAT = node.GetValue("THAT");
+                        Copy(THIS, THAT, true);
+                    }
                 }
             }
         }
-        void Copy(string SOURCE, string NEW)
+        void Copy(string SOURCE, string NEW, bool SWAP)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
@@ -57,7 +63,16 @@ namespace SigmaSciDefRenamer
                     {
                         data.AddValue(NEW + key.name.Remove(0, SOURCE.Length), key.value);
                     }
+					if (SWAP && key.name.StartsWith(NEW))
+					{
+                        data.AddValue(SOURCE + key.name.Remove(0, NEW.Length), key.value);
+					}
                 }
+				if (SWAP)
+				{
+					results.RemoveValuesStartWith(SOURCE);
+					results.RemoveValuesStartWith(NEW);
+				}
                 results.AddData(data);
             }
         }
