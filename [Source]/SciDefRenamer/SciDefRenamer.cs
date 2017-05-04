@@ -17,25 +17,25 @@ namespace SigmaSciDefRenamer
             {
                 foreach (ConfigNode node in SSDR.nodes)
                 {
-                    if (node.name == "Copy")
+                    if (node.name == "Copy" && node.HasValue("OLD") && node.HasValue("NEW"))
                     {
                         string OLD = node.GetValue("OLD");
                         string NEW = node.GetValue("NEW");
                         Copy(OLD, NEW);
                     }
-                    if (node.name == "Delete")
+                    if (node.name == "Delete" && node.HasValue("NAME"))
                     {
                         string NAME = node.GetValue("NAME");
                         Delete(OLD);
                     }
-                    if (node.name == "Rename")
+                    if (node.name == "Rename" && node.HasValue("OLD") && node.HasValue("NEW"))
                     {
                         string OLD = node.GetValue("OLD");
                         string NEW = node.GetValue("NEW");
                         Copy(OLD, NEW);
                         Delete(OLD);
                     }
-                    if (node.name == "Replace")
+                    if (node.name == "Replace" && node.HasValue("FIND") && node.HasValue("REPLACE"))
                     {
                         string FIND = node.GetValue("FIND");
                         string REPLACE = node.GetValue("REPLACE");
