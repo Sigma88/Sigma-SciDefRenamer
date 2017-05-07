@@ -1,3 +1,9 @@
+**v0.3.0**
+
+- Added automatic export of science definitions
+- Added new function: Text
+
+
 **v0.2.0**
 
 - Added README.txt with informations about the syntax
