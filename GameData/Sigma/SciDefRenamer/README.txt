@@ -38,6 +38,14 @@ Swaps all science definitions between (THIS) planet and (THAT) planet.
 
 ---
 
+# Text
+
+This function will affect the content of the report itself, not where it shows up.
+Replaces all instances of a string (FIND) with another string (REPLACE).
+This function can be limited to a certain planet by defining an additional parameter (PLANET).
+
+---
+
 
 
 ## Syntax
@@ -74,6 +82,13 @@ SciDefRenamer
 	{
 		THIS = planet_name
 		THAT = planet_name
+	}
+	Text
+	{
+		FIND = string_to_replace
+		REPLACE = replacement_string
+		
+		PLANET = planet_name // This is Optional //
 	}
 }
 
