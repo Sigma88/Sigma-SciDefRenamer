@@ -50,13 +50,20 @@ namespace SigmaSciDefRenamer
                         string FIND = node.GetValue("FIND");
                         string REPLACE = node.GetValue("REPLACE");
                         string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
-                        Replace(FIND, REPLACE, PLANET);
+                        Replace(FIND, REPLACE, PLANET, false);
                     }
                     if (node.name == "Swap" && node.HasValue("THIS") && node.HasValue("THAT"))
                     {
                         string THIS = node.GetValue("THIS");
                         string THAT = node.GetValue("THAT");
                         Copy(THIS, THAT, true);
+                    }
+                    if (node.name == "Text" && node.HasValue("FIND") && node.HasValue("REPLACE"))
+                    {
+                        string FIND = node.GetValue("FIND");
+                        string REPLACE = node.GetValue("REPLACE");
+                        string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
+                        Replace(FIND, REPLACE, PLANET, true);
                     }
                 }
             }
@@ -119,7 +126,7 @@ namespace SigmaSciDefRenamer
             }
         }
 
-        void Replace(string FIND, string REPLACE, string PLANET)
+        void Replace(string FIND, string REPLACE, string PLANET, bool editValue)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
@@ -131,7 +138,10 @@ namespace SigmaSciDefRenamer
                 {
                     if (key.name.StartsWith(PLANET))
                     {
-                        data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
+                        if (editValue)
+                            data.AddValue(key.name, key.value.Replace(FIND, REPLACE));
+                        else
+                            data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
                     }
                 }
 
