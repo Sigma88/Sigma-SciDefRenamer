@@ -1,6 +1,6 @@
 {
 	"NAME": "Sigma SciDefRenamer",
-	"URL": "https://raw.githubusercontent.com/Sigma88/Sigma-SciDefRenamer/master/GameData/Sigma/SciDefRenamer/Sigma-SciDefRenamer.version",
+	"URL": "https://raw.githubusercontent.com/Sigma88/Sigma-SciDefRenamer/master/GameData/Sigma/SciDefRenamer/Plugins/Sigma-SciDefRenamer.version",
 	"DOWNLOAD": "http://forum.kerbalspaceprogram.com/index.php?/topic/160151-0/",
 	"CHANGE_LOG_URL": "https://raw.githubusercontent.com/Sigma88/Sigma-SciDefRenamer/master/Changelog.txt",
 	"GITHUB":
@@ -12,7 +12,7 @@
 	"VERSION":
 	{
 		"MAJOR": 0,
-		"MINOR": 2,
+		"MINOR": 3,
 		"PATCH": 0,
 		"BUILD": 0
 	},

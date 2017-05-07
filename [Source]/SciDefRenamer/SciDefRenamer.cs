@@ -13,6 +13,16 @@ namespace SigmaSciDefRenamer
     {
         void Start()
         {
+            bool debug = false;
+
+            foreach (ConfigNode SSDR in GameDatabase.Instance.GetConfigNodes("SigmaSciDefRenamer"))
+            {
+                if (SSDR.HasValue("debug") && SSDR.GetValue("debug").Equals("true", StringComparison.OrdinalIgnoreCase))
+                    debug = true;
+            }
+
+            if (debug) PrintLog("Before");
+
             foreach (ConfigNode SSDR in GameDatabase.Instance.GetConfigNodes("SigmaSciDefRenamer"))
             {
                 foreach (ConfigNode node in SSDR.nodes)
@@ -40,7 +50,7 @@ namespace SigmaSciDefRenamer
                         string FIND = node.GetValue("FIND");
                         string REPLACE = node.GetValue("REPLACE");
                         string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
-                        Replace(FIND, REPLACE, PLANET);
+                        Replace(FIND, REPLACE, PLANET, false);
                     }
                     if (node.name == "Swap" && node.HasValue("THIS") && node.HasValue("THAT"))
                     {
@@ -48,7 +58,35 @@ namespace SigmaSciDefRenamer
                         string THAT = node.GetValue("THAT");
                         Copy(THIS, THAT, true);
                     }
+                    if (node.name == "Text" && node.HasValue("FIND") && node.HasValue("REPLACE"))
+                    {
+                        string FIND = node.GetValue("FIND");
+                        string REPLACE = node.GetValue("REPLACE");
+                        string PLANET = node.HasValue("PLANET") ? node.GetValue("PLANET") : "";
+                        Replace(FIND, REPLACE, PLANET, true);
+                    }
                 }
+            }
+
+            if (debug) PrintLog("After");
+
+
+            // Fix for multiples reports
+
+            foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
+            {
+                if (!config.HasNode("RESULTS")) continue;
+                ConfigNode results = config.GetNode("RESULTS");
+
+                ConfigNode data = new ConfigNode();
+                foreach (ConfigNode.Value key in results.values)
+                {
+                    if (key.name[key.name.Length - 1] != '*')
+                        data.AddValue(key.name + (key.name != "default" ? "*" : ""), key.value);
+                }
+
+                results.ClearData();
+                results.AddData(data);
             }
         }
 
@@ -56,18 +94,17 @@ namespace SigmaSciDefRenamer
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
                     if (key.name.StartsWith(SOURCE))
-                    {
                         data.AddValue(NEW + key.name.Remove(0, SOURCE.Length), key.value);
-                    }
+
                     if (SWAP && key.name.StartsWith(NEW))
-                    {
                         data.AddValue(SOURCE + key.name.Remove(0, NEW.Length), key.value);
-                    }
                 }
                 if (SWAP)
                 {
@@ -82,26 +119,63 @@ namespace SigmaSciDefRenamer
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 results.RemoveValuesStartWith(NAME);
             }
         }
 
-        void Replace(string FIND, string REPLACE, string PLANET)
+        void Replace(string FIND, string REPLACE, string PLANET, bool editValue)
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
                     if (key.name.StartsWith(PLANET))
                     {
-                        data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
+                        if (editValue)
+                            data.AddValue(key.name, key.value.Replace(FIND, REPLACE));
+                        else
+                            data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
                     }
                 }
+
                 results.RemoveValuesStartWith(PLANET);
                 results.AddData(data);
+            }
+        }
+
+        void PrintLog(string s)
+        {
+            List<string> SciDefs = new List<string>();
+            foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
+            {
+                SciDefs.Add("EXPERIMENT_DEFINITION");
+                SciDefs.Add("{");
+                if (config.HasValue("id"))
+                    SciDefs.Add("\tid = " + config.GetValue("id"));
+
+                if (!config.HasNode("RESULTS")) continue;
+                ConfigNode results = config.GetNode("RESULTS");
+                SciDefs.Add("\tRESULTS");
+                SciDefs.Add("\t{");
+
+                foreach (ConfigNode.Value key in results.values)
+                {
+                    SciDefs.Add("\t\t" + key.name + " = " + key.value);
+                }
+
+                SciDefs.Add("\t}");
+                SciDefs.Add("}");
+
+
+                Directory.CreateDirectory(KSPUtil.ApplicationRootPath + "GameData/Sigma/SciDefRenamer/Logs");
+                File.WriteAllLines(KSPUtil.ApplicationRootPath + "GameData/Sigma/SciDefRenamer/Logs/SciDefRenamerLog_" + s + ".log", SciDefs.ToArray());
             }
         }
     }
