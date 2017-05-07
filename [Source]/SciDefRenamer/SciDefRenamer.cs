@@ -13,6 +13,16 @@ namespace SigmaSciDefRenamer
     {
         void Start()
         {
+            bool debug = false;
+
+            foreach (ConfigNode SSDR in GameDatabase.Instance.GetConfigNodes("SigmaSciDefRenamer"))
+            {
+                if (SSDR.HasValue("debug") && SSDR.GetValue("debug").Equals("true", StringComparison.OrdinalIgnoreCase))
+                    debug = true;
+            }
+
+            if (debug) PrintLog("Before");
+
             foreach (ConfigNode SSDR in GameDatabase.Instance.GetConfigNodes("SigmaSciDefRenamer"))
             {
                 foreach (ConfigNode node in SSDR.nodes)
@@ -49,6 +59,27 @@ namespace SigmaSciDefRenamer
                         Copy(THIS, THAT, true);
                     }
                 }
+            }
+
+            if (debug) PrintLog("After");
+
+
+            // Fix for multiples reports
+
+            foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
+            {
+                if (!config.HasNode("RESULTS")) continue;
+                ConfigNode results = config.GetNode("RESULTS");
+
+                ConfigNode data = new ConfigNode();
+                foreach (ConfigNode.Value key in results.values)
+                {
+                    if (key.name[key.name.Length - 1] != '*')
+                        data.AddValue(key.name + (key.name != "default" ? "*" : ""), key.value);
+                }
+
+                results.ClearData();
+                results.AddData(data);
             }
         }
 
@@ -102,6 +133,35 @@ namespace SigmaSciDefRenamer
                 }
                 results.RemoveValuesStartWith(PLANET);
                 results.AddData(data);
+            }
+        }
+
+        void PrintLog(string s)
+        {
+            List<string> SciDefs = new List<string>();
+            foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
+            {
+                SciDefs.Add("EXPERIMENT_DEFINITION");
+                SciDefs.Add("{");
+                if (config.HasValue("id"))
+                    SciDefs.Add("\tid = " + config.GetValue("id"));
+
+                if (!config.HasNode("RESULTS")) continue;
+                ConfigNode results = config.GetNode("RESULTS");
+                SciDefs.Add("\tRESULTS");
+                SciDefs.Add("\t{");
+
+                foreach (ConfigNode.Value key in results.values)
+                {
+                    SciDefs.Add("\t\t" + key.name + " = " + key.value);
+                }
+
+                SciDefs.Add("\t}");
+                SciDefs.Add("}");
+
+
+                Directory.CreateDirectory(KSPUtil.ApplicationRootPath + "GameData/Sigma/SciDefRenamer/Logs");
+                File.WriteAllLines(KSPUtil.ApplicationRootPath + "GameData/Sigma/SciDefRenamer/Logs/SciDefRenamerLog_" + s + ".log", SciDefs.ToArray());
             }
         }
     }
