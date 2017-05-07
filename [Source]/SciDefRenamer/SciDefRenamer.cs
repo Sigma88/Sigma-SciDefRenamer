@@ -87,18 +87,17 @@ namespace SigmaSciDefRenamer
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
                     if (key.name.StartsWith(SOURCE))
-                    {
                         data.AddValue(NEW + key.name.Remove(0, SOURCE.Length), key.value);
-                    }
+
                     if (SWAP && key.name.StartsWith(NEW))
-                    {
                         data.AddValue(SOURCE + key.name.Remove(0, NEW.Length), key.value);
-                    }
                 }
                 if (SWAP)
                 {
@@ -113,7 +112,9 @@ namespace SigmaSciDefRenamer
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 results.RemoveValuesStartWith(NAME);
             }
         }
@@ -122,7 +123,9 @@ namespace SigmaSciDefRenamer
         {
             foreach (ConfigNode config in GameDatabase.Instance.GetConfigNodes("EXPERIMENT_DEFINITION"))
             {
+                if (!config.HasNode("RESULTS")) continue;
                 ConfigNode results = config.GetNode("RESULTS");
+
                 ConfigNode data = new ConfigNode();
                 foreach (ConfigNode.Value key in results.values)
                 {
@@ -131,6 +134,7 @@ namespace SigmaSciDefRenamer
                         data.AddValue(key.name.Replace(FIND, REPLACE), key.value);
                     }
                 }
+
                 results.RemoveValuesStartWith(PLANET);
                 results.AddData(data);
             }
