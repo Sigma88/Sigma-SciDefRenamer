@@ -116,7 +116,7 @@ The root node can contain the following functions:
     Finds and replaces string **```FIND```** with string **```REPLACE```** in the science report text.
 
     String **```PLANET```** is optional, if omitted the changes will apply to all planets.
-
+  <br><br><br>
   **NOTE:**
   
    - You can fit multiple functions in a single SciDefRenamer node.
