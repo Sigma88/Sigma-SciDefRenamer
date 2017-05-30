@@ -11,11 +11,12 @@ Dev version: https://github.com/Sigma88/Sigma-SciDefRenamer/tree/Development
 
 # Settings
 
-<def>
+<pre>
 SigmaSciDefRenamer
 {
 }
-<def>
+</pre>
+
 This is the root node, you can add as many as you want, and they can be modified using
 [ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-0/) patches.
 
@@ -23,95 +24,95 @@ The root node contains the following nodes:
 
   - **Rename**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Rename
         {
-    	    <b>OLD</b> = <i>old_planet_name</i>
+            <b>OLD</b> = <i>old_planet_name</i>
             <b>NEW</b> = <i>new_planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Changes all science defs from planet **```OLD```** to planet **```NEW```**.
 
   - **Swap**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Swap
         {
-			<b>THIS</b> = <i>planet_name</i>
-			<b>THAT</b> = <i>planet_name</i>
+            <b>THIS</b> = <i>planet_name</i>
+            <b>THAT</b> = <i>planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Swaps the science definitions of planets **```THIS```** and **```THAT```**.
 
   - **Copy**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Rename
         {
-    	    <b>SOURCE</b> = <i>old_planet_name</i>
+            <b>SOURCE</b> = <i>old_planet_name</i>
             <b>NEW</b> = <i>new_planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Creates a new set of science definitions, copied from planet **```SOURCE```**, and assigns them to planet **```NEW```**.
 
   - **Delete**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Delete
         {
-    	    <b>NAME</b> = <i>planet_name</i>
+            <b>NAME</b> = <i>planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Deletes all science definitions of planet **```NAME```**.
 
   - **Replace**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Replace
         {
-			<b>FIND</b> = <i>string_to_be_replaced</i>
-			<b>REPLACE</b> = <i>replacement_string</i>
-			<b>PLANET</b> = <i>planet_name</i>
+            <b>FIND</b> = <i>string_to_be_replaced</i>
+            <b>REPLACE</b> = <i>replacement_string</i>
+            <b>PLANET</b> = <i>planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Finds and replaces string **```FIND```** with string **```REPLACE```** in the key.
 
-	String **```PLANET```** is optional, if omitted the changes will apply to all planets.
+    String **```PLANET```** is optional, if omitted the changes will apply to all planets.
 
   - **Text**
     
-    <def>
+    <pre>
     SigmaSciDefRenamer
     {
         Text
         {
-			<b>FIND</b> = <i>string_to_be_replaced</i>
-			<b>REPLACE</b> = <i>replacement_string</i>
-			<b>PLANET</b> = <i>planet_name</i>
+            <b>FIND</b> = <i>string_to_be_replaced</i>
+            <b>REPLACE</b> = <i>replacement_string</i>
+            <b>PLANET</b> = <i>planet_name</i>
         }
     }
-	</def>
-	
+    </pre>
+    
     Finds and replaces string **```FIND```** with string **```REPLACE```** in the science report text.
 
-	String **```PLANET```** is optional, if omitted the changes will apply to all planets.
+    String **```PLANET```** is optional, if omitted the changes will apply to all planets.
