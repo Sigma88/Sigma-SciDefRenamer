@@ -20,37 +20,7 @@ SigmaSciDefRenamer
 This is the root node, you can add as many as you want, and they can be modified using
 [ModuleManager](http://forum.kerbalspaceprogram.com/index.php?/topic/50533-0/) patches.
 
-The root node contains the following nodes:
-
-  - **Rename**
-    
-    <pre>
-    SigmaSciDefRenamer
-    {
-        Rename
-        {
-            <b>OLD</b> = <i>old_planet_name</i>
-            <b>NEW</b> = <i>new_planet_name</i>
-        }
-    }
-    </pre>
-    
-    Changes all science defs from planet **```OLD```** to planet **```NEW```**.
-
-  - **Swap**
-    
-    <pre>
-    SigmaSciDefRenamer
-    {
-        Swap
-        {
-            <b>THIS</b> = <i>planet_name</i>
-            <b>THAT</b> = <i>planet_name</i>
-        }
-    }
-    </pre>
-    
-    Swaps the science definitions of planets **```THIS```** and **```THAT```**.
+The root node can contain the following functions:
 
   - **Copy**
     
@@ -81,6 +51,21 @@ The root node contains the following nodes:
     
     Deletes all science definitions of planet **```NAME```**.
 
+  - **Rename**
+    
+    <pre>
+    SigmaSciDefRenamer
+    {
+        Rename
+        {
+            <b>OLD</b> = <i>old_planet_name</i>
+            <b>NEW</b> = <i>new_planet_name</i>
+        }
+    }
+    </pre>
+    
+    Changes all science defs from planet **```OLD```** to planet **```NEW```**.
+
   - **Replace**
     
     <pre>
@@ -99,6 +84,21 @@ The root node contains the following nodes:
 
     String **```PLANET```** is optional, if omitted the changes will apply to all planets.
 
+  - **Swap**
+    
+    <pre>
+    SigmaSciDefRenamer
+    {
+        Swap
+        {
+            <b>THIS</b> = <i>planet_name</i>
+            <b>THAT</b> = <i>planet_name</i>
+        }
+    }
+    </pre>
+    
+    Swaps the science definitions of planets **```THIS```** and **```THAT```**.
+
   - **Text**
     
     <pre>
@@ -116,3 +116,9 @@ The root node contains the following nodes:
     Finds and replaces string **```FIND```** with string **```REPLACE```** in the science report text.
 
     String **```PLANET```** is optional, if omitted the changes will apply to all planets.
+
+  **NOTE:**
+  
+   - You can fit multiple functions in a single SciDefRenamer node.
+    
+   - Functions will be executed in order.
