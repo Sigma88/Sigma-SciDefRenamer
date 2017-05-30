@@ -71,7 +71,7 @@ SciDefRenamer
 		OLD = old_planet_name
 		NEW = new_planet_name
 	}
-	Rename
+	Replace
 	{
 		FIND = string_to_replace
 		REPLACE = replacement_string
